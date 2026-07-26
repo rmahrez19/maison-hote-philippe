@@ -95,25 +95,25 @@ export default function DateRangeCalendar({
     const past = date < today;
     const unavailable = isDateBlocked(date, blocked);
     if (past || unavailable) {
-      return "text-slate-700 line-through cursor-not-allowed";
+      return "text-stone-300 line-through cursor-not-allowed";
     }
     const isCheckIn = date === checkIn;
     const isCheckOut = date === checkOut;
     const inRange = checkIn && checkOut && date > checkIn && date < checkOut;
     if (isCheckIn || isCheckOut) {
-      return "bg-amber-200/90 text-slate-950 font-medium";
+      return "bg-stone-900 text-stone-50 font-medium";
     }
     if (inRange) {
-      return "bg-slate-800/80 text-slate-100";
+      return "bg-stone-100 text-stone-800";
     }
-    return "text-slate-300 hover:bg-slate-800/60 cursor-pointer";
+    return "text-stone-700 hover:bg-stone-100 cursor-pointer";
   }
 
   const navBtnClass =
-    "border border-slate-800 px-3 py-1 text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200";
+    "border border-stone-300 px-3 py-1 text-stone-500 transition-colors hover:border-stone-900 hover:text-stone-900";
 
   return (
-    <div className="border border-slate-800 bg-slate-950/70 p-6 backdrop-blur-md">
+    <div className="rounded-2xl border border-stone-200/60 bg-white/80 p-6 backdrop-blur-md md:p-8">
       <div className="mb-6 flex items-center justify-between">
         <button
           type="button"
@@ -127,9 +127,9 @@ export default function DateRangeCalendar({
         >
           ←
         </button>
-        <p className="font-serif text-2xl text-slate-100">
+        <p className="font-serif text-2xl font-light text-stone-900">
           {MONTH_NAMES[viewDate.getMonth()]}{" "}
-          <span className="font-mono text-sm text-slate-500">
+          <span className="text-sm font-light text-stone-400">
             {viewDate.getFullYear()}
           </span>
         </p>
@@ -147,7 +147,7 @@ export default function DateRangeCalendar({
         </button>
       </div>
 
-      <div className="grid grid-cols-7 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">
+      <div className="grid grid-cols-7 text-center text-[10px] font-light uppercase tracking-[0.2em] text-stone-400">
         {DAY_NAMES.map((d) => (
           <div key={d} className="py-2">
             {d}
@@ -155,12 +155,13 @@ export default function DateRangeCalendar({
         ))}
       </div>
 
-      {/* gap-px sur fond ardoise : la trame de filets fins apparaît
-          entre les cases pleines. */}
-      <div className="grid grid-cols-7 gap-px border border-slate-800/60 bg-slate-800/60 text-center">
+      {/* gap-px sur fond clair : la trame de filets fins apparaît entre
+          les cases pleines, dans le même esprit que les grilles du reste
+          du site. */}
+      <div className="grid grid-cols-7 gap-px border border-stone-200/60 bg-stone-200/60 text-center">
         {cells.map((date, i) => {
           if (date === null) {
-            return <div key={`empty-${i}`} className="aspect-square bg-night" />;
+            return <div key={`empty-${i}`} className="aspect-square bg-white" />;
           }
           const disabled = date < today || isDateBlocked(date, blocked);
           return (
@@ -169,11 +170,11 @@ export default function DateRangeCalendar({
               type="button"
               disabled={disabled}
               onClick={() => handleClick(date)}
-              className={`flex aspect-square flex-col items-center justify-center gap-0.5 bg-night font-mono text-xs transition-colors ${classForDate(date)}`}
+              className={`flex aspect-square flex-col items-center justify-center gap-0.5 bg-white text-xs transition-colors ${classForDate(date)}`}
             >
               <span>{date.slice(8, 10)}</span>
               {!disabled && (
-                <span className="text-[8px] leading-none text-slate-500">
+                <span className="text-[8px] leading-none text-[#ab8a5b]">
                   {priceForDate(roomId)}€
                 </span>
               )}
@@ -182,7 +183,7 @@ export default function DateRangeCalendar({
         })}
       </div>
 
-      <div className="mt-6 flex items-center gap-8 font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">
+      <div className="mt-6 flex items-center gap-8 text-[10px] font-light uppercase tracking-[0.2em] text-stone-400">
         <span className="flex items-center gap-3">
           <WaveIndicator /> Libre
         </span>
@@ -191,7 +192,7 @@ export default function DateRangeCalendar({
         </span>
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-slate-500">
+      <p className="mt-4 text-xs font-light leading-relaxed text-stone-400">
         Les dates barrées sont indisponibles (réservations directes et
         Booking.com). Le jour du départ reste sélectionnable comme check-out.
       </p>

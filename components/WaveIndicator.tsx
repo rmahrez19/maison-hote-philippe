@@ -17,13 +17,13 @@ export default function WaveIndicator({ state = "active" }: Props) {
     >
       {!still && (
         <>
-          <span className="absolute inset-0 animate-wave rounded-full border border-amber-200/60" />
-          <span className="absolute inset-0 animate-wave rounded-full border border-amber-200/60 [animation-delay:1.3s]" />
+          <span className="absolute inset-0 animate-wave rounded-full border border-[#ab8a5b]/60" />
+          <span className="absolute inset-0 animate-wave rounded-full border border-[#ab8a5b]/60 [animation-delay:1.3s]" />
         </>
       )}
       <span
         className={`size-1.5 rounded-full ${
-          still ? "bg-slate-600" : "bg-amber-200/80"
+          still ? "bg-stone-300" : "bg-[#ab8a5b]"
         }`}
       />
     </span>

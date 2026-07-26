@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { ROOMS, ROOM_LIST, type RoomId } from "@/lib/rooms";
 import type { BookingSource, UnifiedBooking } from "@/lib/admin-bookings";
+import { cancelBooking, confirmBooking } from "@/app/admin/actions";
 import InvoiceModal from "./InvoiceModal";
 
 type SourceFilter = "all" | BookingSource;
@@ -84,10 +86,38 @@ function SourceBadge({ source }: { source: BookingSource }) {
 
 /** Bloc principal : registre unifié direct + Booking.com, filtres et tris en 1 clic. */
 export default function BookingsRegistry({ bookings }: Props) {
+  const router = useRouter();
   const [source, setSource] = useState<SourceFilter>("all");
   const [room, setRoom] = useState<RoomFilter>("all");
   const [sort, setSort] = useState<SortKey>("date-desc");
   const [selected, setSelected] = useState<UnifiedBooking | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  const [, startTransition] = useTransition();
+
+  function handleConfirm(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
+    setActionError(null);
+    setPendingId(id);
+    startTransition(async () => {
+      const res = await confirmBooking(id);
+      if (res.error) setActionError(res.error);
+      setPendingId(null);
+      router.refresh();
+    });
+  }
+
+  function handleCancel(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
+    setActionError(null);
+    setPendingId(id);
+    startTransition(async () => {
+      const res = await cancelBooking(id);
+      if (res.error) setActionError(res.error);
+      setPendingId(null);
+      router.refresh();
+    });
+  }
 
   const visible = useMemo(() => {
     const filtered = bookings.filter(
@@ -171,11 +201,43 @@ export default function BookingsRegistry({ bookings }: Props) {
                     </td>
                     <td className="py-3">
                       {b.status ? (
-                        <span
-                          className={`border px-3 py-1 text-xs ${STATUS_CLASS[b.status]}`}
-                        >
-                          {STATUS_LABEL[b.status]}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span
+                            className={`border px-3 py-1 text-xs ${STATUS_CLASS[b.status]}`}
+                          >
+                            {STATUS_LABEL[b.status]}
+                          </span>
+                          {b.status === "pending" && (
+                            <>
+                              <button
+                                type="button"
+                                disabled={pendingId === b.id}
+                                onClick={(e) => handleConfirm(b.id, e)}
+                                className="border border-emerald-700 px-3 py-1 text-xs uppercase tracking-[0.15em] text-emerald-800 transition-colors hover:bg-emerald-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                Confirmer
+                              </button>
+                              <button
+                                type="button"
+                                disabled={pendingId === b.id}
+                                onClick={(e) => handleCancel(b.id, e)}
+                                className="border border-stone-300 px-3 py-1 text-xs uppercase tracking-[0.15em] text-stone-500 transition-colors hover:border-red-700 hover:text-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                Refuser
+                              </button>
+                            </>
+                          )}
+                          {b.status === "confirmed" && (
+                            <button
+                              type="button"
+                              disabled={pendingId === b.id}
+                              onClick={(e) => handleCancel(b.id, e)}
+                              className="text-xs uppercase tracking-[0.15em] text-stone-400 transition-colors hover:text-red-700 disabled:cursor-not-allowed"
+                            >
+                              Annuler
+                            </button>
+                          )}
+                        </div>
                       ) : (
                         <span className="text-xs text-stone-400">—</span>
                       )}
@@ -187,6 +249,8 @@ export default function BookingsRegistry({ bookings }: Props) {
           </table>
         </div>
       )}
+
+      {actionError && <p className="mt-4 text-sm text-red-700">{actionError}</p>}
 
       {selected && (
         <InvoiceModal booking={selected} onClose={() => setSelected(null)} />

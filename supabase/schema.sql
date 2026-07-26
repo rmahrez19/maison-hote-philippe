@@ -163,3 +163,30 @@ create table if not exists public.invoices (
 
 alter table public.invoice_counters enable row level security;
 alter table public.invoices enable row level security;
+
+-- ------------------------------------------------------------
+-- Anti-double-réservation au niveau base de données.
+--
+-- Le contrôle applicatif (SELECT puis INSERT dans /api/bookings) a
+-- une fenêtre de course : deux requêtes simultanées peuvent toutes
+-- les deux passer le SELECT avant que l'une des deux n'ait posé son
+-- INSERT. Seule une contrainte au niveau Postgres empêche ça de
+-- façon garantie, quel que soit le nombre de requêtes concurrentes.
+--
+-- btree_gist permet d'utiliser l'égalité (room_id) dans une
+-- contrainte d'exclusion GiST aux côtés d'un chevauchement de plage
+-- de dates (&&). La colonne stay_range est générée automatiquement à
+-- partir de check_in/check_out — jamais renseignée à la main.
+-- ------------------------------------------------------------
+create extension if not exists btree_gist;
+
+alter table public.room_bookings
+  add column if not exists stay_range daterange
+    generated always as (daterange(check_in, check_out, '[)')) stored;
+
+alter table public.room_bookings
+  drop constraint if exists room_bookings_no_overlap;
+alter table public.room_bookings
+  add constraint room_bookings_no_overlap
+    exclude using gist (room_id with =, stay_range with &&)
+    where (status <> 'cancelled');

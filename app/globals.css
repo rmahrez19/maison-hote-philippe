@@ -2,12 +2,11 @@
 
 @theme inline {
   --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
 }
 
 @theme {
-  --color-night: #070b0e;
-
   --animate-wave: wave-ripple 2.6s cubic-bezier(0.25, 0.6, 0.35, 1) infinite;
 
   @keyframes wave-ripple {
@@ -40,9 +39,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .animate-wave {
-    animation: none;
   }
 }
 

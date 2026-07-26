@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
+import { Cormorant, Jost, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const serif = Cormorant_Garamond({
+const serif = Cormorant({
   variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500"],
 });
 
-const sans = Inter({
+const sans = Jost({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 const mono = JetBrains_Mono({
@@ -37,7 +38,7 @@ export default function RootLayout({
       lang="fr"
       className={`${serif.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-night text-slate-300 selection:bg-amber-200/20 selection:text-amber-100">
+      <body className="min-h-full flex flex-col bg-stone-50 text-stone-900 selection:bg-stone-900/10 selection:text-stone-900">
         {children}
       </body>
     </html>

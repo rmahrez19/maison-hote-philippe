@@ -31,10 +31,16 @@ function foldLine(line: string): string {
 /**
  * GET /api/calendar/export?room=rive-gauche|rive-droite
  *
- * Flux iCalendar (RFC 5545) des réservations directes confirmées pour
- * la chambre demandée. Philippe colle cette URL — une par chambre —
- * dans l'extranet Booking.com (Calendrier > Importer un calendrier)
- * pour bloquer les dates réservées en direct sur la bonne annonce.
+ * Flux iCalendar (RFC 5545) des réservations directes pour la chambre
+ * demandée. Philippe colle cette URL — une par chambre — dans
+ * l'extranet Booking.com (Calendrier > Importer un calendrier) pour
+ * bloquer les dates réservées en direct sur la bonne annonce.
+ *
+ * Inclut aussi bien 'pending' que 'confirmed' : une demande directe
+ * bloque la date sur Booking.com dès qu'elle est faite, sans attendre
+ * que Philippe la valide manuellement (qui peut prendre des heures).
+ * Un blocage 'pending' abandonné disparaît de lui-même du flux dès
+ * que la réservation est refusée (passage à 'cancelled').
  */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -51,9 +57,9 @@ export async function GET(request: Request) {
 
   const { data: bookings, error } = await supabase
     .from("room_bookings")
-    .select("id, check_in, check_out")
+    .select("id, check_in, check_out, status")
     .eq("room_id", room)
-    .eq("status", "confirmed")
+    .in("status", ["pending", "confirmed"])
     .order("check_in", { ascending: true });
 
   if (error) {
@@ -80,7 +86,7 @@ export async function GET(request: Request) {
       `DTSTAMP:${now}`,
       `DTSTART;VALUE=DATE:${toIcsDate(b.check_in)}`,
       `DTEND;VALUE=DATE:${toIcsDate(b.check_out)}`,
-      "SUMMARY:Réservé (Direct)",
+      `SUMMARY:${b.status === "confirmed" ? "Réservé (Direct)" : "Demande en cours (Direct)"}`,
       "END:VEVENT"
     );
   }

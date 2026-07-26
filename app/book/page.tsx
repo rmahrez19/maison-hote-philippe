@@ -1,27 +1,41 @@
-import SmartHeader from "@/components/SmartHeader";
+import Header from "@/components/aman/Header";
+import Footer from "@/components/aman/Footer";
+import Reveal from "@/components/aman/Reveal";
 import BookingNode from "@/components/BookingNode";
 
+/**
+ * Page de réservation, alignée sur la DA Aman du reste du site : même
+ * header/footer, même grammaire typographique et même grammaire
+ * d'animation (Reveal). La logique de réservation (BookingNode et ses
+ * sous-composants) est inchangée — seul l'habillage visuel a été
+ * reconnecté au nouveau design.
+ */
 export default function BookPage() {
   return (
     <>
-      <SmartHeader />
-      <main className="flex-1 px-6 pb-24 pt-32 md:px-12 md:pt-40">
+      <Header forceSolid />
+      <main className="flex-1 bg-stone-50 px-6 pb-24 pt-32 md:px-16 md:pt-40">
         <div className="mx-auto max-w-6xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-amber-200/60">
-            Réservation
-          </p>
-          <h1 className="mt-4 font-serif text-5xl text-slate-100 md:text-6xl">
-            Choisissez vos nuits à bord
-          </h1>
-          <p className="mt-6 max-w-xl text-slate-400">
-            Deux chambres, deux ambiances — sélectionnez la vôtre, puis vos
-            dates. Le tarif exact s&apos;affiche jour par jour.
-          </p>
+          <Reveal className="max-w-xl">
+            <p className="text-[11px] font-light uppercase tracking-[0.3em] text-stone-400">
+              06 — Séjour & Réservation
+            </p>
+            <h1 className="mt-6 font-serif text-5xl font-light leading-tight text-stone-900 md:text-6xl">
+              Réservez votre séjour
+            </h1>
+            <p className="mt-6 text-sm font-light leading-relaxed text-stone-600 md:text-base">
+              Le temps s&apos;arrête pour la durée d&apos;un séjour.
+              Choisissez votre résidence, vos dates, et laissez le fleuve
+              faire le reste.
+            </p>
+          </Reveal>
+
           <div className="mt-16">
             <BookingNode />
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

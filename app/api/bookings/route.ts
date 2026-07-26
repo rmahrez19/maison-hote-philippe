@@ -18,6 +18,13 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
  * scopés par room_id). Le prix est recalculé côté serveur (jamais
  * confiance dans un total envoyé par le client).
  *
+ * Ce SELECT-puis-INSERT reste une vérification "rapide" avec une
+ * fenêtre de course en cas de requêtes strictement simultanées — la
+ * garantie réelle vient de la contrainte d'exclusion Postgres
+ * `room_bookings_no_overlap` (voir supabase/schema.sql), qui fait
+ * échouer l'INSERT si une autre requête a gagné la course entre-temps
+ * (code erreur 23P01, géré plus bas).
+ *
  * TODO (itération suivante) : notifications Resend + Telegram,
  * confirmation admin.
  */
@@ -115,6 +122,15 @@ export async function POST(request: Request) {
     .single();
 
   if (error) {
+    // exclusion_violation : une autre requête a réservé ces dates entre
+    // notre vérification et notre INSERT — la contrainte DB a fait son
+    // travail, on renvoie la même erreur "propre" que le contrôle rapide.
+    if (error.code === "23P01") {
+      return NextResponse.json(
+        { error: "Ces dates ne sont plus disponibles" },
+        { status: 409 }
+      );
+    }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 

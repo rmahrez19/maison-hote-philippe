@@ -188,3 +188,42 @@ export async function unblockDate(id: string) {
   if (error) return { error: error.message };
   return { ok: true };
 }
+
+/**
+ * Confirme une réservation directe (pending → confirmed).
+ *
+ * TODO (dès que le token de la Connectivity API Booking.com est
+ * disponible) : pousser cette confirmation à Booking.com ici pour
+ * bloquer les dates côté leur inventaire sans attendre le prochain
+ * refresh de l'export iCal (`GET /api/calendar/export`), qui reste
+ * pour l'instant le seul mécanisme de blocage côté Booking.com. La
+ * confirmation locale ne doit jamais être bloquée par un échec de cet
+ * appel une fois branché — best-effort, à consigner pour visibilité
+ * admin plutôt qu'à faire échouer toute l'action.
+ */
+export async function confirmBooking(bookingId: string) {
+  if (!(await requireAal2())) return { error: "Non autorisé." };
+
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from("room_bookings")
+    .update({ status: "confirmed" })
+    .eq("id", bookingId);
+
+  if (error) return { error: error.message };
+  return { ok: true };
+}
+
+/** Refuse/annule une réservation directe (pending ou confirmed → cancelled). */
+export async function cancelBooking(bookingId: string) {
+  if (!(await requireAal2())) return { error: "Non autorisé." };
+
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from("room_bookings")
+    .update({ status: "cancelled" })
+    .eq("id", bookingId);
+
+  if (error) return { error: error.message };
+  return { ok: true };
+}
