@@ -15,7 +15,8 @@ const NAV_RIGHT = [
 
 interface HeaderProps {
   /** Force l'apparence "sur fond clair" dès le chargement — pour les pages
-      qui n'ouvrent pas sur un visuel plein écran sombre (ex. /book), où le
+      qui n'ouvrent pas sur un visuel plein écran sombre (ex.
+      /reservation-contact), où le
       texte blanc du header transparent serait illisible sur le fond clair. */
   forceSolid?: boolean;
 }
@@ -96,7 +97,7 @@ export default function Header({ forceSolid = false }: HeaderProps) {
             ))}
           </nav>
           <Link
-            href="/book"
+            href="/reservation-contact"
             className={`border-b pb-0.5 text-[11px] font-light uppercase tracking-[0.22em] transition-colors ${
               solid
                 ? "border-stone-900/30 text-stone-900 hover:border-stone-900"

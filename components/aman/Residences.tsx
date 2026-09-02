@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Reveal from "@/components/aman/Reveal";
 
 interface Room {
@@ -44,7 +45,9 @@ const ROOMS: Room[] = [
 /**
  * Les deux résidences réelles, présentées comme deux cartes d'exception
  * épurées — image en premier plan, spécifications discrètes, une phrase
- * qui pose l'atmosphère plutôt qu'une liste d'équipements.
+ * qui pose l'atmosphère plutôt qu'une liste d'équipements. Chaque carte est
+ * entièrement cliquable et mène à /reservation-contact, comme toutes les
+ * autres CTA de réservation du site.
  */
 export default function Residences() {
   return (
@@ -64,24 +67,32 @@ export default function Residences() {
       <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-10">
         {ROOMS.map((room, i) => (
           <Reveal key={room.name} delay={i * 0.12} as="article">
-            <div className="group relative aspect-[4/5] w-full overflow-hidden bg-stone-100">
-              <Image
-                src={room.image.src}
-                alt={room.image.alt}
-                fill
-                sizes="(min-width: 768px) 45vw, 100vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-            </div>
-            <h3 className="mt-8 font-serif text-2xl font-light text-stone-900 md:text-3xl">
-              {room.name}
-            </h3>
-            <p className="mt-4 text-[11px] font-light uppercase tracking-[0.15em] text-stone-400">
-              {room.specs.join(" · ")}
-            </p>
-            <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-stone-600">
-              {room.description}
-            </p>
+            <Link
+              href="/reservation-contact"
+              className="group block focus:outline-none focus-visible:ring-1 focus-visible:ring-stone-900 focus-visible:ring-offset-4 focus-visible:ring-offset-stone-50"
+            >
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-stone-100">
+                <Image
+                  src={room.image.src}
+                  alt={room.image.alt}
+                  fill
+                  sizes="(min-width: 768px) 45vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
+              <h3 className="mt-8 font-serif text-2xl font-light text-stone-900 md:text-3xl">
+                {room.name}
+              </h3>
+              <p className="mt-4 text-[11px] font-light uppercase tracking-[0.15em] text-stone-400">
+                {room.specs.join(" · ")}
+              </p>
+              <p className="mt-5 max-w-md text-sm font-light leading-relaxed text-stone-600">
+                {room.description}
+              </p>
+              <span className="mt-6 inline-block border-b border-stone-900/30 pb-1 text-[11px] font-light uppercase tracking-[0.28em] text-stone-900 transition-colors group-hover:border-stone-900">
+                Réserver cette chambre →
+              </span>
+            </Link>
           </Reveal>
         ))}
       </div>

@@ -63,7 +63,7 @@ export default function SmartHeader() {
             </Link>
           ))}
           <Link
-            href="/book"
+            href="/reservation-contact"
             className="border border-amber-200/40 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-amber-100/90 transition-colors hover:bg-amber-200/10"
           >
             Réserver

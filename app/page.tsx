@@ -59,7 +59,7 @@ export default function HomePage() {
               Choisissez vos dates
             </h2>
             <Link
-              href="/book"
+              href="/reservation-contact"
               className="mt-10 inline-block border-b border-stone-900/30 pb-1 text-[11px] font-light uppercase tracking-[0.28em] text-stone-900 transition-colors hover:border-stone-900"
             >
               Réserver un séjour →
