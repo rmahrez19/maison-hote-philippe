@@ -25,10 +25,10 @@ const SLIDES: Slide[] = [
     sizeClass: "aspect-[4/3] w-[78vw] md:w-[34rem]",
   },
   {
-    src: "/photos/chambre-1.jpg",
-    label: "Première chambre",
-    note: "La Seine depuis le lit",
-    sizeClass: "aspect-[4/3] w-[62vw] md:w-[26rem]",
+    src: "/photos/chambre-rive-droite.jpg",
+    label: "La Chambre Rive Droite",
+    note: "Lit King Size, salle de bains privative",
+    sizeClass: "aspect-[3/4] w-[62vw] md:w-[24rem]",
   },
   {
     src: "/photos/rooftop.jpg",
@@ -37,13 +37,13 @@ const SLIDES: Slide[] = [
     sizeClass: "aspect-[16/9] w-[78vw] md:w-[40rem]",
   },
   {
-    src: "/photos/chambre-2.jpg",
-    label: "Deuxième chambre",
-    note: "Tête de lit sombre, bois clair",
+    src: "/photos/chambre-rive-gauche.jpg",
+    label: "La Chambre Rive Gauche",
+    note: "Tête de lit laquée, bois clair",
     sizeClass: "aspect-[4/3] w-[62vw] md:w-[26rem]",
   },
   {
-    src: "/photos/bain.jpg",
+    src: "/photos/jardin.jpg",
     label: "Côté jardin",
     note: "L'esprit du bord, ciel ouvert",
     sizeClass: "aspect-square w-[62vw] md:w-[22rem]",

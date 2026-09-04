@@ -25,7 +25,7 @@ export const ROOMS: Record<RoomId, RoomDefinition> = {
     subtitle: "Chambre Standard — salle de bains partagée",
     bed: "Lit double de 160",
     bathroom: "Salle de bains partagée",
-    photo: "/photos/chambre-2.jpg",
+    photo: "/photos/chambre-rive-gauche.jpg",
     equipments: [
       "Vue sur la Seine",
       "Lit double de 160",
@@ -41,7 +41,7 @@ export const ROOMS: Record<RoomId, RoomDefinition> = {
     subtitle: "Chambre Privative — salle de bains privée",
     bed: "Lit King Size de 180",
     bathroom: "Salle de bains privative attenante",
-    photo: "/photos/chambre-1.jpg",
+    photo: "/photos/chambre-rive-droite.jpg",
     equipments: [
       "Vue panoramique sur la Seine",
       "Lit King Size de 180",

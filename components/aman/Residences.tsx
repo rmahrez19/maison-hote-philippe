@@ -21,7 +21,7 @@ const ROOMS: Room[] = [
     description:
       "Un cocon intimiste à hauteur d'eau, baigné de lumière naturelle au réveil.",
     image: {
-      src: "/photos/chambre-1.jpg",
+      src: "/photos/chambre-rive-droite.jpg",
       alt: "La Suite Privative Vue Seine",
     },
   },
@@ -36,7 +36,7 @@ const ROOMS: Room[] = [
     description:
       "Confort brut et ligne épurée pour une immersion totale dans la quiétude du parc nautique.",
     image: {
-      src: "/photos/chambre-2.jpg",
+      src: "/photos/chambre-rive-gauche.jpg",
       alt: "La Cabine Panoramique",
     },
   },

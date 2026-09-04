@@ -26,7 +26,7 @@ const EXPERIENCES: Experience[] = [
   },
   {
     image: {
-      src: "/photos/bain.jpg",
+      src: "/photos/jardin.jpg",
       alt: "Côté jardin, l'esprit du bord",
     },
     title: "Écrin de Nature",
