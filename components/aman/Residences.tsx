@@ -22,14 +22,14 @@ const ROOMS: Room[] = [
       "Un cocon intimiste à hauteur d'eau, baigné de lumière naturelle au réveil.",
     image: {
       src: "/photos/chambre-rive-droite.jpg",
-      alt: "La Suite Privative Vue Seine",
+      alt: "La Suite Privative Vue Seine : grand lit double, parquet en chêne et fenêtre donnant sur le fleuve",
     },
   },
   {
     name: "La Cabine Panoramique",
     specs: [
       "Grand lit double (160 cm)",
-      "Salle de bains partagée d'exception",
+      "Salle de bains exclusive",
       "Accès terrasse",
       "Vue Seine",
     ],
