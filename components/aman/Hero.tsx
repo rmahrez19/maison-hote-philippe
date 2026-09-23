@@ -23,8 +23,9 @@ const item = {
 /**
  * Hero plein écran façon maison de luxe : visuel immersif, voile sombre
  * pour la lisibilité, titre éditorial centré, indication de défilement.
- * Le visuel est la photo réelle de la maison flottante, retouchée en
- * lumière de coucher de soleil. Au chargement, la photo se pose (léger
+ * Le visuel est la Seine au crépuscule depuis le mouillage — la seule
+ * photo du lot en vraie pleine résolution, et celle qui porte le mieux la
+ * direction artistique nocturne. Au chargement, la photo se pose (léger
  * zoom arrière + fondu) puis le texte apparaît ligne par ligne.
  */
 export default function Hero() {
@@ -39,15 +40,20 @@ export default function Hero() {
         transition={{ duration: 1.8, ease: EASE }}
       >
         <Image
-          src="/photos/hero.jpg"
-          alt="La maison flottante Megalight II, amarrée sur la Seine au coucher du soleil"
+          src="/photos/seine-crepuscule.jpg"
+          alt="La Seine au crépuscule depuis le mouillage de Megalight II, les rives illuminées se reflétant sur l'eau"
           fill
           priority
           sizes="100vw"
           className="object-cover"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Deux voiles : un dégradé vertical qui assoit le titre en haut et le
+          repère de défilement en bas, et un voile radial centré — sans lui,
+          le sous-titre et l'appel à l'action tombent pile sur les lumières
+          de la rive et deviennent illisibles. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)_70%)]" />
 
       <motion.div
         className="relative mx-auto flex max-w-3xl flex-col items-center px-6 text-center"

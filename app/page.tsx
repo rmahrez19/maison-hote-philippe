@@ -34,8 +34,8 @@ export default function HomePage() {
             "Ancien journaliste devenu coach-thérapeute, Philippe vous ouvre les portes de son houseboat amarré au parc nautique de l'Île de Monsieur. Ici, l'hospitalité se vit en toute liberté : un petit-déjeuner continental servi face au fleuve, qui se transforme au gré des envies en café philosophique ou en doux moment de silence.",
           ]}
           image={{
-            src: "/photos/peniche-nuit.jpg",
-            alt: "La maison flottante Megalight II, amarrée de nuit au parc nautique",
+            src: "/photos/megalight-jour.jpg",
+            alt: "La maison flottante Megalight II, amarrée au parc nautique de l'Île de Monsieur",
           }}
           imageSide="left"
         />

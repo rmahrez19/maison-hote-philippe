@@ -34,8 +34,8 @@ const EXPERIENCES: Experience[] = [
   },
   {
     image: {
-      src: "/photos/seine-crepuscule.jpg",
-      alt: "La Seine et les rives illuminées, au crépuscule",
+      src: "/photos/peniche-nuit.jpg",
+      alt: "La maison flottante éclairée de nuit, au bord du parc nautique",
     },
     title: "Emplacement Privilégié",
     note: "À 20 min à pied de La Seine Musicale, accès direct au Parc des Princes, Versailles et Paris via M9 / T2.",
